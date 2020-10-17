@@ -18,6 +18,11 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QWZ-SK-nlX">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <searchBar key="tableFooterView" contentMode="redraw" id="jFv-YJ-ugS">
+                                    <rect key="frame" x="0.0" y="112" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </searchBar>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="k9O-DD-6bq" detailTextLabel="g47-r7-Lf6" style="IBUITableViewCellStyleSubtitle" id="CYH-sr-lnD">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
@@ -63,6 +68,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="search" destination="jFv-YJ-ugS" id="RdE-iu-fOi"/>
                         <outlet property="tableView" destination="QWZ-SK-nlX" id="WHU-Ul-tOf"/>
                         <segue destination="G9L-aJ-Nht" kind="show" identifier="cellSegue" id="uqM-IN-vdl"/>
                     </connections>

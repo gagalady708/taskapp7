@@ -11,7 +11,7 @@ import RealmSwift
 import UserNotifications
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate
- {
+{
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var search: UISearchBar!
     
@@ -22,11 +22,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.reloadData()
         
         if searchBar.text == "" {
-           taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending:
-           true)
-          let predicate = NSPredicate(format: "category BEGINSWITH %@", searchText)
-          taskArray = realm.objects(Task.self).filter(predicate)
-          tableView.reloadData()
+            taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending:
+                true)
+            tableView.reloadData()
+            
+            } else {
+            let predicate = NSPredicate(format: "category BEGINSWITH %@", searchText)
+            taskArray = realm.objects(Task.self).filter(predicate)
+            tableView.reloadData()
         }
     }
     
@@ -37,18 +40,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         let inputViewController:InputViewController = segue.destination as! InputViewController
-
+        
         if segue.identifier == "cellSegue" {
             let indexPath = self.tableView.indexPathForSelectedRow
             inputViewController.task = taskArray[indexPath!.row]
         } else {
             let task = Task()
-
+            
             let allTasks = realm.objects(Task.self)
             if allTasks.count != 0 {
                 task.id = allTasks.max(ofProperty: "id")! + 1
             }
-
+            
             inputViewController.task = task
         }
     }
@@ -56,7 +59,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +71,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskArray.count
     }
-
+    
     // 各セルの内容を返すメソッド
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 再利用可能な cell を得る
@@ -76,47 +79,47 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let task = taskArray[indexPath.row]
         cell.textLabel?.text = task.title
-
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
-
+        
         let dateString:String = formatter.string(from: task.date)
         cell.detailTextLabel?.text = dateString
-
+        
         return cell
     }
-
+    
     // 各セルを選択した時に実行されるメソッド
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
-
+    
     // セルが削除が可能なことを伝えるメソッド
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath)-> UITableViewCell.EditingStyle {
         return .delete
     }
-
+    
     // Delete ボタンが押された時に呼ばれるメソッド
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-    
-    if editingStyle == .delete {
         
-        let task = self.taskArray[indexPath.row]
-
-        // ローカル通知をキャンセルする
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: [String(task.id)])
-        // データベースから削除する
-        try! realm.write {
-            self.realm.delete(self.taskArray[indexPath.row])
-            tableView.deleteRows(at: [indexPath], with: .fade)
-     }
-        center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
-            for request in requests {
-                print("/---------------")
-                print(request)
-                print("---------------/")
+        if editingStyle == .delete {
+            
+            let task = self.taskArray[indexPath.row]
+            
+            // ローカル通知をキャンセルする
+            let center = UNUserNotificationCenter.current()
+            center.removePendingNotificationRequests(withIdentifiers: [String(task.id)])
+            // データベースから削除する
+            try! realm.write {
+                self.realm.delete(self.taskArray[indexPath.row])
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            center.getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+                for request in requests {
+                    print("/---------------")
+                    print(request)
+                    print("---------------/")
+                }
             }
         }
     }
-  }
 }

@@ -20,14 +20,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let predicate = NSPredicate(format: "category BEGINSWITH %@", searchText)
         taskArray = realm.objects(Task.self).filter(predicate)
         tableView.reloadData()
-//       if text == "" {
-//           search.updateView(arr: arr)
-//        } else {
-//           filterdArr = arr.filter { (str) -> Bool in
-//                return str.contains(text)
-//            }
-//            mainView.updateView(arr: filterdArr)
-//        }
+        
+        if searchBar.text == "" {
+           taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending:
+           true)
+          let predicate = NSPredicate(format: "category BEGINSWITH %@", searchText)
+          taskArray = realm.objects(Task.self).filter(predicate)
+          tableView.reloadData()
+        }
     }
     
     let realm = try! Realm()

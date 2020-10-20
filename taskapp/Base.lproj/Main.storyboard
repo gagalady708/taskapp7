@@ -70,7 +70,7 @@
                     <connections>
                         <outlet property="search" destination="jFv-YJ-ugS" id="RdE-iu-fOi"/>
                         <outlet property="tableView" destination="QWZ-SK-nlX" id="WHU-Ul-tOf"/>
-                        <segue destination="G9L-aJ-Nht" kind="show" identifier="cellSegue" id="uqM-IN-vdl"/>
+                        <segue destination="G9L-aJ-Nht" kind="show" identifier="cellSegue" id="Q4s-Oi-ayO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -181,7 +181,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="iF4-Mp-Afb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kYA-sv-M5Q">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -195,6 +195,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="uqM-IN-vdl"/>
+        <segue reference="Q4s-Oi-ayO"/>
     </inferredMetricsTieBreakers>
 </document>
